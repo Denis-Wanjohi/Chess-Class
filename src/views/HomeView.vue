@@ -11,7 +11,7 @@ import WhiteQueen from '@/components/WhiteQueen.vue';
 import BlackQueen from '@/components/BlackQueen.vue';
 import WhiteKing from '@/components/WhiteKing.vue';
 import BlackKing from '@/components/BlackKing.vue';
-import { ref } from 'vue';
+import { ref,onMounted } from 'vue';
 import  {useBoardStore} from '@/stores/board'
 const chess_board =  useBoardStore()
 
@@ -29,7 +29,7 @@ const selectedPiece = ref(null)
 const selectedPiecePos = ref()
 const playersTurn = ref('White')
 onMounted(()=>{
-  setTimeout((){
+  setTimeout(()=>{
       console.log(pieces.value)
   },5000)
 
