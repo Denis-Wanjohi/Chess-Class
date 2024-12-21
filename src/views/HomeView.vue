@@ -187,7 +187,7 @@ const change = ref('king')
     <p v-for="x in pieces">
         {{x}}
     </p> -->
-
+    <component :is="selectedPiece" class="bg-blue-300"></component>
     <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/>
     <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/>
 
