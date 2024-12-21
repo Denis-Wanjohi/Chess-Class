@@ -26,7 +26,7 @@ const selectedPiece = ref(null)
 const selectedPiecePos = ref()
 const playersTurn = ref('White')
 function handlePieceMovement(f,r){
-
+    console.log("moving pieces :" + f,r)
     // console.log(pieces.value[r][f])
     // console.log(selectedPiece.value)
     // console.log(selectedPiece.value)
