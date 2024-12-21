@@ -28,6 +28,12 @@ const pieces =  ref([
 const selectedPiece = ref(null)
 const selectedPiecePos = ref()
 const playersTurn = ref('White')
+onMounted(()=>{
+  setTimeout((){
+      console.log(pieces.value)
+  },5000)
+
+})
 function handlePieceMovement(f,r){
     console.log("moving pieces :" + f,r)
     // console.log(pieces.value[r][f])
