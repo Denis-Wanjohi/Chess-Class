@@ -198,7 +198,11 @@ const change = ref('king')
 
 
     <div v-for="p in chess_board.board">
-      {{ p }}
-      
+      <!-- <div v-for="x in p"> 
+        <component :is=x class="bg-blue-300"></component>
+      </div> -->
+    {{ p[0] }}
+    <component :is=p[0] class="bg-blue-300"></component>
+
     </div>
 </template>
