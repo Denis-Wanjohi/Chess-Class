@@ -12,16 +12,17 @@ import BlackQueen from '~/components/BlackQueen.vue';
 import WhiteKing from '~/components/WhiteKing.vue';
 import BlackKing from '~/components/BlackKing.vue';
 
-const pieces =  ref([
-        [WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook], // Row 1
-        [WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn],         // Row 2
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 3
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 4
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 5
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 6
-        [BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn],         // Row 7
-        [BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook] // Row 8
-      ])
+const pieces = ref([
+  ['WhiteRook', 'WhiteKnight', 'WhiteBishop', 'WhiteQueen', 'WhiteKing', 'WhiteBishop', 'WhiteKnight', 'WhiteRook'], // Row 1
+  ['WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn'],         // Row 2
+  [null, null, null, null, null, null, null, null],                        // Row 3
+  [null, null, null, null, null, null, null, null],                        // Row 4
+  [null, null, null, null, null, null, null, null],                        // Row 5
+  [null, null, null, null, null, null, null, null],                        // Row 6
+  ['BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn'],         // Row 7
+  ['BlackRook', 'BlackKnight', 'BlackBishop', 'BlackQueen', 'BlackKing', 'BlackBishop', 'BlackKnight', 'BlackRook'] // Row 8
+]);
+
 const selectedPiece = ref(null)
 const selectedPiecePos = ref()
 const playersTurn = ref('White')
@@ -41,22 +42,22 @@ function handlePieceMovement(f,r){
         if(selectedPiece.value == 'null'){
             return;
         }
-        console.log(selectedPiece.value)
-        if( 
-            selectedPiece.value.__file && 
-            selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
-        ){
-            // return;
-        }else{
-            selectedPiece.value = null
-            return;
-        }
+        // console.log(selectedPiece.value)
+        // if( 
+        //     selectedPiece.value.__file && 
+        //     selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
+        // ){
+        //     // return;
+        // }else{
+        //     selectedPiece.value = null
+        //     return;
+        // }
     }
     
     if(selectedPiece.value != null){
         // console.log(selectedPiece.value)
-        let  file = selectedPiece.value.__file
-        let piece = file.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
+        // let  file = selectedPiece.value.__file
+        let piece = selectedPiece.value.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
 
         movePiece(piece,r,f)
         
@@ -70,6 +71,24 @@ function handlePieceMovement(f,r){
         // selectedPiece.value = pieces.value[r][f].__file.split('/').pop().replace('.vue', '');
     }
     
+}
+const components = {
+  WhiteRook,
+  WhiteKnight,
+  WhiteBishop,
+  WhiteQueen,
+  WhiteKing,
+  WhitePawn,
+  BlackRook,
+  BlackKnight,
+  BlackBishop,
+  BlackQueen,
+  BlackKing,
+  BlackPawn
+};
+
+function resolveComponent(name) {
+  return components[name] || null;
 }
 
 function movePiece(piece,rank,file){
@@ -167,6 +186,7 @@ function movePiece(piece,rank,file){
 
     <!-- turn management -->
     <p>Players to play :{{ playersTurn }}</p>
+    <!-- {{pie}} -->
     <div v-for="row,r in pieces" class="flex">
 
         <p v-for="file,f in row" 
@@ -177,11 +197,9 @@ function movePiece(piece,rank,file){
                     : (Math.floor(f / 8) + f % 8) % 2 === 0 ? 'bg-green-600' : 'bg-slate-400'
                 ]"
         >
-        <component :is=file class="w-fit h-[90%]"></component>
+        <component :is="resolveComponent(file)" class="w-fit h-[90%]"></component>
         </p>
     </div>
 
-    <p v-for="x in pieces">
-        {{x}}
-    </p>
+
 </template>
