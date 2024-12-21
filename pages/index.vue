@@ -166,7 +166,7 @@ function movePiece(piece,rank,file){
 <template>
 
     <!-- turn management -->
-    <p>Players to play {{ playersTurn }}</p>
+    <p>Players to play :{{ playersTurn }}</p>
     <div v-for="row,r in pieces" class="flex">
 
         <p v-for="file,f in row" 
@@ -180,4 +180,8 @@ function movePiece(piece,rank,file){
         <component :is=file class="w-fit h-[90%]"></component>
         </p>
     </div>
+
+    <p v-for="x in pieces">
+        {{x}}
+    </p>
 </template>
