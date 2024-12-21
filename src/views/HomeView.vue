@@ -35,22 +35,26 @@ onMounted(()=>{
 
 })
 function handlePieceMovement(f,r){
-    console.log("moving pieces :" + f,r)
+    console.log("entering the function")
     // console.log(pieces.value[r][f])
     // console.log(selectedPiece.value)
     // console.log(selectedPiece.value)
 
     if(pieces.value[r][f] == null  && selectedPiece.value == 'null' ){
+    console.log("checking if we are ready to move on")
+
         // console.log(pieces.value[r][f])
     // console.log(selectedPiece.value)
     // console.log(selectedPiece.value == null)
         return; 
     }
     if(selectedPiece.value){
+    console.log("we have moved on")
+
         if(selectedPiece.value == 'null'){
             return;
         }
-        console.log(selectedPiece.value)
+        console.log("still"+selectedPiece.value)
         if( 
             selectedPiece.value.__file && 
             selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
