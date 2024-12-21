@@ -15,16 +15,17 @@ import { ref,onMounted } from 'vue';
 import  {useBoardStore} from '@/stores/board'
 const chess_board =  useBoardStore()
 
-const pieces =  ref([
-        [WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook], // Row 1
-        [WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn],         // Row 2
-        [null, null, null, null, null, null, null, null],                        // Row 3
-        [null, null, null, null, null, null, null, null],                        // Row 4
-        [null, null, null, null, null, null, null, null],                        // Row 5
-        [null, null, null, null, null, null, null, null],                        // Row 6
-        [BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn],         // Row 7
-        [BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook] // Row 8
-      ])
+const pieces = ref([
+  ['WhiteRook', 'WhiteKnight', 'WhiteBishop', 'WhiteQueen', 'WhiteKing', 'WhiteBishop', 'WhiteKnight', 'WhiteRook'], // Row 1
+  ['WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn', 'WhitePawn'],         // Row 2
+  [null, null, null, null, null, null, null, null],                        // Row 3
+  [null, null, null, null, null, null, null, null],                        // Row 4
+  [null, null, null, null, null, null, null, null],                        // Row 5
+  [null, null, null, null, null, null, null, null],                        // Row 6
+  ['BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn', 'BlackPawn'],         // Row 7
+  ['BlackRook', 'BlackKnight', 'BlackBishop', 'BlackQueen', 'BlackKing', 'BlackBishop', 'BlackKnight', 'BlackRook'] // Row 8
+]);
+
 const selectedPiece = ref(null)
 const selectedPiecePos = ref()
 const playersTurn = ref('White')
@@ -35,13 +36,13 @@ onMounted(()=>{
 
 })
 function handlePieceMovement(f,r){
-    console.log("entering the function")
-    // console.log(pieces.value[r][f])
-    // console.log(selectedPiece.value)
+    // console.log("entering the function")
+    console.log(pieces.value[r][f])
+    console.log(selectedPiece.value)
     // console.log(selectedPiece.value)
 
     if(pieces.value[r][f] == null  && selectedPiece.value == 'null' ){
-    console.log("checking if we are ready to move on")
+    // console.log("checking if we are ready to move on")
 
         // console.log(pieces.value[r][f])
     // console.log(selectedPiece.value)
@@ -49,41 +50,60 @@ function handlePieceMovement(f,r){
         return; 
     }
     if(selectedPiece.value){
-    console.log("we have moved on")
+    // console.log("we have moved on")
 
         if(selectedPiece.value == 'null'){
             return;
         }
-        console.log("still"+selectedPiece.value)
-        if( 
-            selectedPiece.value.__file && 
-            selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
-        ){
-            // return;
-        }else{
-            selectedPiece.value = null
-            return;
-        }
+        // console.log("still"+selectedPiece.value)
+        // if( 
+        //     selectedPiece.value.__file && 
+        //     selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
+        // ){
+        //     // return;
+        // }else{
+        //     selectedPiece.value = null
+        //     return;
+        // }
     }
     
     if(selectedPiece.value != null){
         // console.log(selectedPiece.value)
-        let  file = selectedPiece.value.__file
-        let piece = file.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
-
+        // let  file = selectedPiece.value.__file
+        let piece = selectedPiece.value.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
+        console.log(piece)
         movePiece(piece,r,f)
         
     }else{
         if(pieces.value[r][f] == 'null'){
             return;
         }
-        console.log("hello" +   pieces.value[r][f].__file )
+        // console.log("hello" +   pieces.value[r][f] )
         selectedPiece.value = pieces.value[r][f]
         selectedPiecePos.value = [r,f]   
 
         // selectedPiece.value = pieces.value[r][f].__file.split('/').pop().replace('.vue', '');
     }
     
+}
+
+const components = {
+  WhiteRook,
+  WhiteKnight,
+  WhiteBishop,
+  WhiteQueen,
+  WhiteKing,
+  WhitePawn,
+  BlackRook,
+  BlackKnight,
+  BlackBishop,
+  BlackQueen,
+  BlackKing,
+  BlackPawn
+};
+
+function resolveComponent(name) {
+  return components[name] || null;
 }
 
 function movePiece(piece,rank,file){
@@ -192,7 +212,7 @@ const change = ref('king')
                     : (Math.floor(f / 8) + f % 8) % 2 === 0 ? 'bg-green-600' : 'bg-slate-400'
                 ]"
         >
-        <component :is=file class="w-fit h-[90%]"></component>
+        <component :is="resolveComponent(file)" class="w-fit h-[90%]"></component>
         </p>
     </div>
 
