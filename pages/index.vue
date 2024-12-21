@@ -43,6 +43,7 @@ function handlePieceMovement(f,r){
         }
         // console.log(selectedPiece.value)
         if( 
+            selectedPiece.value.__file && 
             selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
         ){
             // return;
@@ -54,8 +55,8 @@ function handlePieceMovement(f,r){
     
     if(selectedPiece.value != null){
         // console.log(selectedPiece.value)
-        
-        let piece = selectedPiece.value.__file.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
+        let  file = selectedPiece.value.__file
+        let piece = file.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
 
         movePiece(piece,r,f)
         
