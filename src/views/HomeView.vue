@@ -67,7 +67,7 @@ function handlePieceMovement(f,r){
         if(pieces.value[r][f] == 'null'){
             return;
         }
-        console.log("hello")
+        console.log("hello" +   pieces.value[r][f] )
         selectedPiece.value = pieces.value[r][f]
         selectedPiecePos.value = [r,f]   
 
