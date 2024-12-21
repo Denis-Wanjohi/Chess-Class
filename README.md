@@ -1,6 +1,6 @@
-# Nuxt Minimal Starter
+# CHESS CLASS
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Chess training web app class - this a minimal web application to teach chess.
 
 ## Setup
 
