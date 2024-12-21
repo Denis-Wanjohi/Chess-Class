@@ -30,7 +30,7 @@ const selectedPiecePos = ref()
 const playersTurn = ref('White')
 onMounted(()=>{
   setTimeout(()=>{
-      console.log(pieces.value)
+      console.log(pieces.value[0][0])
   },5000)
 
 })
