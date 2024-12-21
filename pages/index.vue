@@ -41,7 +41,7 @@ function handlePieceMovement(f,r){
         if(selectedPiece.value == 'null'){
             return;
         }
-        // console.log(selectedPiece.value)
+        console.log(selectedPiece.value)
         if( 
             selectedPiece.value.__file && 
             selectedPiece.value.__file.split('/').pop().replace('.vue', '').includes(playersTurn.value)
