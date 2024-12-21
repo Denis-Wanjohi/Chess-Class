@@ -198,8 +198,8 @@ const change = ref('king')
     </p> -->
     <component :is="selectedPiece" class="bg-blue-300"></component>
     {{ selectedPiece }}
-    <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/>
-    <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/>
+    <!-- <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/> -->
+    <!-- <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/> -->
 
 
 
@@ -207,8 +207,8 @@ const change = ref('king')
       <!-- <div v-for="x in p"> 
         <component :is=x class="bg-blue-300"></component>
       </div> -->
-    {{ p[0] }}
-    <component :is=p[0] class="bg-blue-300"></component>
+    <!-- {{ p[0] }} -->
+    <!-- <component :is=p[0] class="bg-blue-300"></component> -->
 
     </div>
 </template>
