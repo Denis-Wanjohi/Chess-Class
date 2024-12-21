@@ -65,6 +65,7 @@ function handlePieceMovement(f,r){
         if(pieces.value[r][f] == 'null'){
             return;
         }
+        console.log(pieces.value[r][f])
         selectedPiece.value = pieces.value[r][f]
         selectedPiecePos.value = [r,f]   
 
@@ -188,6 +189,7 @@ const change = ref('king')
         {{x}}
     </p> -->
     <component :is="selectedPiece" class="bg-blue-300"></component>
+    {{ selectedPiece }}
     <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/>
     <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/>
 
