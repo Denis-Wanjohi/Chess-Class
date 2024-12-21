@@ -12,6 +12,8 @@ import BlackQueen from '@/components/BlackQueen.vue';
 import WhiteKing from '@/components/WhiteKing.vue';
 import BlackKing from '@/components/BlackKing.vue';
 import { ref } from 'vue';
+import  {useBoardStore} from '@/stores/board'
+const chess_board =  useBoardStore()
 
 const pieces =  ref([
         [WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook], // Row 1
@@ -193,5 +195,10 @@ const change = ref('king')
     <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/>
     <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/>
 
-    
+
+
+    <div v-for="p in chess_board.board">
+      {{ p }}
+      
+    </div>
 </template>
