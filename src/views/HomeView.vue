@@ -15,10 +15,10 @@ import { ref } from 'vue';
 const pieces =  ref([
         [WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook], // Row 1
         [WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn],         // Row 2
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 3
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 4
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 5
-        ['null', 'null', 'null', 'null', 'null', 'null', 'null', 'null'],                        // Row 6
+        [null, null, null, null, null, null, null, null],                        // Row 3
+        [null, null, null, null, null, null, null, null],                        // Row 4
+        [null, null, null, null, null, null, null, null],                        // Row 5
+        [null, null, null, null, null, null, null, null],                        // Row 6
         [BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn, BlackPawn],         // Row 7
         [BlackRook, BlackKnight, BlackBishop, BlackQueen, BlackKing, BlackBishop, BlackKnight, BlackRook] // Row 8
       ])
