@@ -182,6 +182,7 @@ function movePiece(piece,rank,file){
         </p>
     </div>
 
+    {{ selectedPiece }}
     <p v-for="x in pieces">
         {{x}}
     </p>
