@@ -12,6 +12,7 @@ import BlackQueen from '@/components/BlackQueen.vue';
 import WhiteKing from '@/components/WhiteKing.vue';
 import BlackKing from '@/components/BlackKing.vue';
 import { ref } from 'vue';
+
 const pieces =  ref([
         [WhiteRook, WhiteKnight, WhiteBishop, WhiteQueen, WhiteKing, WhiteBishop, WhiteKnight, WhiteRook], // Row 1
         [WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn, WhitePawn],         // Row 2
@@ -159,6 +160,7 @@ function movePiece(piece,rank,file){
     }
 }
 
+const change = ref('king')
 
 </script>
 
@@ -167,7 +169,6 @@ function movePiece(piece,rank,file){
 
     <!-- turn management -->
     <p>Players to play :{{ playersTurn }}</p>
-    <!-- <p class="bg-red-400 text-green-400">one</p> -->
     <div v-for="row,r in pieces" class="flex">
 
         <p v-for="file,f in row" 
@@ -182,8 +183,13 @@ function movePiece(piece,rank,file){
         </p>
     </div>
 
-    {{ selectedPiece }}
+    <!-- {{ selectedPiece }}
     <p v-for="x in pieces">
         {{x}}
-    </p>
+    </p> -->
+
+    <BlackKing v-if="change === 'king'" @click="change = 'bishop'"/>
+    <BlackBishop v-if="change === 'bishop'" @click="change = 'king'"/>
+
+    
 </template>
