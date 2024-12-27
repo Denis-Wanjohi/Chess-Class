@@ -42,8 +42,6 @@ function handlePieceMovement(f,r){
         if(selectedPiece.value == null){
             return;
         }
-
-       
         // console.log(selectedPiece.value)
         // if( 
         //     selectedPiece.value.__file && 
@@ -57,15 +55,8 @@ function handlePieceMovement(f,r){
     }
     
     if(selectedPiece.value != null){
-        
-        if(selectedPiece.value.includes(playersTurn.value) == false){
-            selectedPiece.value = null
-            selectedPiecePos.value = null
-            return;
-        }
-        if(selectedPiecePos.value[0]  == r && selectedPiecePos.value[1]  == f){
-            return;
-        }
+        // console.log(selectedPiece.value)
+        // let  file = selectedPiece.value.__file
         let piece = selectedPiece.value.split('/').pop().replace('.vue', '').replace(/(White|Black)/, '')
 
         movePiece(piece,r,f)
@@ -77,6 +68,7 @@ function handlePieceMovement(f,r){
         selectedPiece.value = pieces.value[r][f]
         selectedPiecePos.value = [r,f]   
 
+        // selectedPiece.value = pieces.value[r][f].__file.split('/').pop().replace('.vue', '');
     }
     
 }
@@ -329,26 +321,22 @@ function isPathBlocked(start, end) {
 
 <template>
 
-    <div class="w-[100%] bg-blue-300">
-        <!-- turn management -->
-        <p>Players to play :{{ playersTurn }}</p>
-        <!-- {{pie}} -->
-        <div v-for="row,r in pieces" class="flex">
+    <!-- turn management -->
+    <p>Players to play :{{ playersTurn }}</p>
+    <!-- {{pie}} -->
+    <div v-for="row,r in pieces" class="flex">
 
-            <p v-for="file,f in row" 
-            @click.prevent="handlePieceMovement(f,r)"
-            class="h-6 w-6 border"
-            
-            :class="[ (r + 1) % 2 == 0 
-                        ? (Math.floor(f / 8) + f % 8) % 2 === 1 ? 'bg-green-600' : 'bg-slate-400'
-                        : (Math.floor(f / 8) + f % 8) % 2 === 0 ? 'bg-green-600' : 'bg-slate-400'
-                    ]"
-            >
-            <component :is="resolveComponent(file)" class="w-fit h-[90%]" :class="[selectedPiecePos != null ? selectedPiecePos[0]==r && selectedPiecePos[1] == f ?'bg-blue-600 px-1':'' : '']"></component>
-            </p>
-        </div>
+        <p v-for="file,f in row" 
+        @click.prevent="handlePieceMovement(f,r)"
+        class="h-6 w-6 border"
+        :class="[ (r + 1) % 2 == 0 
+                    ? (Math.floor(f / 8) + f % 8) % 2 === 1 ? 'bg-green-600' : 'bg-slate-400'
+                    : (Math.floor(f / 8) + f % 8) % 2 === 0 ? 'bg-green-600' : 'bg-slate-400'
+                ]"
+        >
+        <component :is="resolveComponent(file)" class="w-fit h-[90%]"></component>
+        </p>
     </div>
-
 
 
 </template>
