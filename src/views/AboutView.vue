@@ -1,7 +1,12 @@
+<script  setup>
+import DefaultLayout from '@/layouts/default.vue';
+</script>
+
+
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <DefaultLayout>
+  </DefaultLayout>
+
 </template>
 
 <style>

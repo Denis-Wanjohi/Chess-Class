@@ -1,15 +1,15 @@
-import BlackPawn from '@/components/BlackPawn.vue';
-import WhitePawn from '@/components/WhitePawn.vue';
-import WhiteRook from '@/components/WhiteRook.vue';
-import BlackRook from '@/components/BlackRook.vue';
-import WhiteKnight from '@/components/WhiteKnight.vue';
-import BlackKnight from '@/components/BlackKnight.vue';
-import WhiteBishop from '@/components/WhiteBishop.vue';
-import BlackBishop from '@/components/BlackBishop.vue';
-import WhiteQueen from '@/components/WhiteQueen.vue';
-import BlackQueen from '@/components/BlackQueen.vue';
-import WhiteKing from '@/components/WhiteKing.vue';
-import BlackKing from '@/components/BlackKing.vue';
+import BlackPawn from '@/components/pieces/BlackPawn.vue';
+import WhitePawn from '@/components/pieces/WhitePawn.vue';
+import WhiteRook from '@/components/pieces/WhiteRook.vue';
+import BlackRook from '@/components/pieces/BlackRook.vue';
+import WhiteKnight from '@/components/pieces/WhiteKnight.vue';
+import BlackKnight from '@/components/pieces/BlackKnight.vue';
+import WhiteBishop from '@/components/pieces/WhiteBishop.vue';
+import BlackBishop from '@/components/pieces/BlackBishop.vue';
+import WhiteQueen from '@/components/pieces/WhiteQueen.vue';
+import BlackQueen from '@/components/pieces/BlackQueen.vue';
+import WhiteKing from '@/components/pieces/WhiteKing.vue';
+import BlackKing from '@/components/pieces/BlackKing.vue';
 import { defineStore } from 'pinia';
 
 export const useBoardStore = defineStore('board', {
