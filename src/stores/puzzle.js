@@ -4,7 +4,8 @@ export const usePuzzleStore = defineStore('puzzle',{
     state:()=>({
         board:"null",
         solution:"null",
-        player:"null"
+        player:"null",
+        puzzles:[]
     }),
     actions:{
         setPuzzle(value){

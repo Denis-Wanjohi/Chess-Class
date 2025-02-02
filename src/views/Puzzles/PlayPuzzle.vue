@@ -16,7 +16,9 @@ import { ref } from 'vue';
 import { onMounted } from 'vue';
 import { usePuzzleStore } from '@/stores/puzzle';
 import { watch } from 'vue';
-
+import axiosClient from '@/axios/axios';
+const puzzles = ref()
+const puzzleStore = ref(usePuzzleStore())
 const pieces = ref([
   [null, null, null, null, null, null, null, null],                        // Row 3
   [null, null, null, null, null, null, null, null],                        // Row 3
@@ -27,16 +29,16 @@ const pieces = ref([
   [null, null, null, null, null, null, null, null],                        // Row 5
   [null, null, null, null, null, null, null, null],                        // Row 6
 ]);
-onMounted(()=>{
-        if(usePuzzleStore().board != null){
-                playersTurn.value = usePuzzleStore().player
-                pieces.value = usePuzzleStore().board
+// onMounted(()=>{
+//         if(usePuzzleStore().board != null){
+//                 playersTurn.value = usePuzzleStore().player
+//                 pieces.value = usePuzzleStore().board
 
-                watch(pieces.value,()=>{
-                        checkSolution()
-                })
-        }
-})
+//                 watch(pieces.value,()=>{
+//                         checkSolution()
+//                 })
+//         }
+// })
 
 const selectedPiece = ref(null)
 const selectedPiecePos = ref()
@@ -269,9 +271,32 @@ function checkSolution(){
                 
         }
 }
+
+onMounted(()=>{
+    puzzleStore.value.puzzles = []
+    axiosClient.get('/puzzles')
+    .then((res)=>{
+        // console.log(res)
+        res.data.forEach(element => {
+            puzzleStore.value.puzzles.push(JSON.parse(element.puzzle))
+        });
+    })
+    .catch((err)=>{
+        alert("eror getting puzzles")
+        console.log(err)
+    })
+})
+
+const selectPuzzle =(index)=>{
+    console.log(puzzleStore.value.puzzles[index])
+}
 </script>
 <template>
-        <p>{{ usePuzzleStore().solution }}</p>
+        <div class="grid grid-cols-3">
+            <p v-for="(puzzle,index) in puzzleStore.puzzles"  class="bg-blue-400 hover:bg-blue-600 rounded p-5  mx-3 text-center font-bold text-xl cursor-pointer" @click="selectPuzzle(index)">
+                {{ index + 1 }}
+            </p>
+        </div>
             <div>
                 <!-- turn management -->
                 <p>Players to play :{{ playersTurn }}</p>
