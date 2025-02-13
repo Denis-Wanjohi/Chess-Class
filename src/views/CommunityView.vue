@@ -8,7 +8,8 @@ import { useUserStore } from '@/stores/user';
 onMounted(()=>{
     useFriendsStore().friends = []
     axiosClient.get('/players')
-    .then((res)=>{       
+    .then((res)=>{  
+        console.log(res)     
         res.data.forEach(element => {
             useFriendsStore().addFriend(element)
         });

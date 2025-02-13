@@ -202,7 +202,6 @@ const products = ref({
 
 // Lifecycle hooks
 onMounted(() => {
-    console.log(`challange-request.${useUserStore().id}`)
     echo.channel(`challange-request.${useUserStore().id}`).listen('ChallangeRequest', (event) => {
     
 
