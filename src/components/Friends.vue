@@ -6,7 +6,7 @@
                   <!-- <Avatar image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png" shape="circle" /> -->
                   <span class="font-bold">NEW CHALLANGE ERROR</span>
               </div>
-              <div class="font-medium text-lg my-4">You are ftoly playing someone else</div>
+              <div class="font-medium text-lg my-4">You are currently playing someone else</div>
               <div class="flex justify-around">
                 <Button size="small" class="mx-5" label="Go to game" severity="sucess" @click="onAccept()"></Button>
                 <Button size="small" class="mx-5" label="Cancel all games" severity="danger" @click="onDecline()"></Button>

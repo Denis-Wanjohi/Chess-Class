@@ -166,7 +166,6 @@ const getBoard = ()=>{
                     {{userStore.username}}
                   </div>
                 </div>
-
                 <!-- <div class="flex justify-around my-5 font-bold">
                   <Button severity="warn">Draw</Button>
                   <Button severity="danger">Resign</Button>
