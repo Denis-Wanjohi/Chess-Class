@@ -13,8 +13,12 @@ import Button from 'primevue/button';
                     <p class="md:text-8xl text-4xl font-serif">Unleash the Ultimate GM in you</p>
                     <p class="font-sans text-xl my-10">Master your chess skills with our advanced programs and training</p>
                     <div class="flex w-fit md:m-0 mx-auto">
-                        <Button severity="info" class="font-bold mx-2">Start Playing</Button>
-                        <Button severity="secondary" class="font-bold mx-2">Learn More</Button>
+                        <router-link to="/challanges">
+                          <Button severity="info" class="font-bold mx-2">Start Playing</Button>  
+                        </router-link>
+                        <router-link to="/puzzles">
+                            <Button severity="secondary" class="font-bold mx-2">Learn More</Button>
+                        </router-link>
                     </div>
                 </div>
             </div>

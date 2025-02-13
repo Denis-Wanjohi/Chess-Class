@@ -5,9 +5,9 @@
             <h2 class="font-extrabold text-center text-4xl">P U Z Z E L S</h2>
             <i class="text-center text-sm underline">"A puzzle a day keeps the blunder away"</i>
         </div>
-        <div class="w-screen flex">
-            <div class="w-1/3 flex justify-center items-center">
-                <div class="text-center  text-xl">
+        <div class="w-screen sm:flex">
+            <div class="sm:w-1/3 w-full sm:flex justify-center items-center">
+                <div class="text-center  text-xl" v-if="!isLoading">
                     
                     <div v-if="Math.ceil(solveMoves/2) == Math.ceil(steps/2) && steps != 0">
                         <p>Points: {{Number(player.points) + 5}}</p>
@@ -27,9 +27,10 @@
                     </div>
                 </div>
             </div>
-            <div class="w-2/3">
+            <div class="sm:w-2/3 w-full">
                 <TheChessboard 
-                    class="w-[50%]"
+                    class="sm:w-[50%]"
+                    
                     :key="boardKey"
                     :board-config="boardConfig" 
                     @board-created="(api)=> board = api"
@@ -55,7 +56,9 @@ import {TheChessboard} from 'vue3-chessboard'
 import  Button  from 'primevue/button';
 import axiosClient from '@/axios/axios';
 const initialPuzzle = ref()
+const boardOrientation = ref('white')
 const puzzle = ref()
+const isLoading = ref(false)
 const puzzleSol = ref()
 const boardKey =ref(0)
 const solveMoves = ref(0)
@@ -74,7 +77,7 @@ const boardConfig = reactive({
   draggable: { enabled: true },
   selectable: { enabled: true },
 //   challanger to play white
-  orientation: 'white',
+  orientation: boardOrientation.value,
 });
 const board = ref()
 const peiceMoved = ()=>{
@@ -160,6 +163,7 @@ function wrongMoveHandler() {
 // lip_pAHaT4fUAyoVJf3bXYKq
 onMounted( async ()=>{
     getUser()
+    isLoading.value = true
     
 })
 const puzzleData = [
@@ -181,6 +185,8 @@ watch(player.value,()=>{
 function getPuzzle(){
     axiosClient2.get(`https://lichess.org/api/puzzle/${puzzleData[player.value.count]}`)
     .then(res=>{
+        isLoading.value = false
+        console.log(res.data)
         puzzle.value =  res.data.puzzle.solution
         puzzleSol.value =  res.data.puzzle.solution
         solveMoves.value = res.data.puzzle.solution.length
@@ -189,16 +195,27 @@ function getPuzzle(){
         // });
         initialPuzzle.value = res.data.game.pgn
         board.value.loadPgn(res.data.game.pgn)
+        // board.value.toggleOrientation()
+        console.log(board.value)
+        console.log(board.value.game._turn == 'b')
+        if(board.value.game._turn == 'b'){
+            // alert()
+            // boardOrientation.value = 'black'
+            board.value.toggleOrientation()
+            // board.value.toogleOrientation()
+        }
         boardKey++
     })
     .catch(err=>{
-        console.error('error in getting the puzzle')
+        console.log('error in getting the puzzle')
         // alert("reload page please")
     })
 }
 function nextPuzzle(){
+    isLoading.value = true
     solveMoves.value = 0
     solveMoves.value = 0 
+    steps.value = 0 
     player.value.points  =  Number(player.value.points) + 5
     player.value.played.push(puzzleData[player.value.count])
     // console.log
@@ -206,6 +223,8 @@ function nextPuzzle(){
     .then((res)=>{
         player.value.count = res.data[0].count
         player.value.points = res.data[0].points
+        // isLoading.value = false
+        getPuzzle()
     })
     .catch(err=>{
         console.error(err)

@@ -106,7 +106,7 @@ const getBoard = ()=>{
 
 <template>
     <NavBar/>
-    {{ capturedPiece }}
+    <!-- {{ capturedPiece }} -->
 
     <div>
         <div class="lg:flex flex-none h-[90vh] bg-slate-200">
@@ -167,10 +167,10 @@ const getBoard = ()=>{
                   </div>
                 </div>
 
-                <div class="flex justify-around my-5 font-bold">
+                <!-- <div class="flex justify-around my-5 font-bold">
                   <Button severity="warn">Draw</Button>
                   <Button severity="danger">Resign</Button>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

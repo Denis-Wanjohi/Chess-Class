@@ -83,10 +83,9 @@ const onDecline = (code)=>{
                 </div>
                 <div>{{challange.receiver_username}}</div>
             </div>
-            {{challange.code}}
-            <div class="flex  justify-center my-5">
-                <Button severity="success" class="mx-5 font-bold" @click="onAccept(challange.code,challange.challanger_id)" >A C C E P T</Button>
-                <Button severity="danger"class="mx-5 font-bold" @click="onDecline(challange.code)" >C A N C E L</Button>
+            <div class="flex  sm:justify-center justify-between my-5 text-nowrap">
+                <Button severity="success" class="sm:mx-5 font-bold mx-2" @click="onAccept(challange.code,challange.challanger_id)" >A C C E P T</Button>
+                <Button severity="danger"class="sm:mx-5 font-bold mx-2" @click="onDecline(challange.code)" >C A N C E L</Button>
             </div>
             
         </Fieldset>
@@ -104,15 +103,15 @@ const onDecline = (code)=>{
                 <div>{{challange.receiver_username}}</div>
             </div>
             <!-- {{ challange }} -->
-            <div class="flex  justify-center my-5">
-                <Button severity="success" class="mx-5 font-bold" @click="onAccept(challange.code)" >P L A Y</Button>
-                <Button severity="danger"class="mx-5 font-bold" @click="onDecline(challange.code)">C A N C E L</Button>
+            <div class="flex  justify-center text-nowrap sm:text-lg text-xs my-5">
+                <Button severity="success" class="sm:mx-5  mx-2 font-bold" @click="onAccept(challange.code)" >P L A Y</Button>
+                <Button severity="danger"class="sm:mx-5 mx-2 font-bold" @click="onDecline(challange.code)">C A N C E L</Button>
             </div>
             
         </Fieldset>
     </div>
 
-    <div class="bg-slate-200 rounded-xl w-1/2 h-fit py-10 mx-auto text-center" v-if="OutgoingChallanges.length == 0 && IncomingChallanges.length == 0">
+    <div class="bg-slate-200 rounded-xl sm:w-1/2 w-[90%] h-fit py-10 mx-auto text-center" v-if="OutgoingChallanges.length == 0 && IncomingChallanges.length == 0">
         <p class="font-bold ">NO ACTIVE CHALLANGE</p>
         <p class="font-mono">go to <router-link to="/community" class="text-blue-400">community</router-link> page to create a challange</p>
     </div>
