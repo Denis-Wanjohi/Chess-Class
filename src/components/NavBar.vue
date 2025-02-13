@@ -60,7 +60,7 @@ const logout = ()=>{
                 <Button severity="secondary" class="font-bold mx-5">{{ useUserStore().username }}</Button>
                 <Button severity="secondary" class="font-bold mx-5">{{ useUserStore().username }}</Button>
             </div> -->
-            <div class="block md:hidden"  v-else >
+            <div class="block lg:hidden"  v-else >
                 <Button severity="secondary" @click="visible = true"  >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="18" height="2" x="3" y="11" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="16" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="6" fill="currentColor" rx=".95" ry=".95"/></svg>
                 </Button> 
