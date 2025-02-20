@@ -10,6 +10,7 @@ import { useChallengeStore } from '@/stores/challange';
 import { useCurrentGameStore } from '@/stores/currentGame';
 import { useRouter,useRoute } from 'vue-router';
 import Button from 'primevue/button'
+import { getBlackPiece, getWhitePiece } from '@/Utils/utils';
 const userStore = useUserStore()
 const challangeStore = useChallengeStore()
 const currentGameStore = useCurrentGameStore()
@@ -32,6 +33,7 @@ const boardConfig = reactive({
   orientation: playerPieces,
 });
 const peiceMoved = ()=>{
+  console.log(board.value)
   let captPieces = board.value.getCapturedPieces()
   if(captPieces.black.length != 0){
     capturedPiece.value.black.push(captPieces.black[0])
@@ -66,7 +68,7 @@ onMounted(() => {
       // playerColor.value = playerColor.value == 'white' ? 'black' : 'white'
       capturedPiece.value.black = JSON.parse(event.game.captured).black
       capturedPiece.value.white = JSON.parse(event.game.captured).white
-      console.log(event.game.captured)
+      // console.log(event)
   });
   getBoard()
 });
@@ -96,7 +98,7 @@ const getBoard = ()=>{
                           :res.data.color == 'black' && userStore.id == currentGameStore.receiver.id ? false : true
     capturedPiece.value.black = JSON.parse(res.data.captured).black
     capturedPiece.value.white = JSON.parse(res.data.captured).white
-
+    console.log(board.value)
   })
   .catch((err)=>{
     console.error(err)
@@ -107,11 +109,15 @@ const getBoard = ()=>{
 <template>
     <NavBar/>
     <!-- {{ capturedPiece }} -->
-
+    <!-- {{ useCurrentGameStore().challenger.username }} -->
+    <!-- {{ board.getFen() }} -->
+      <!-- <div class="box" :class="[getWhitePiece('p')]"></div> -->
+      <!-- <img src="" class="box" alt=""> -->
     <div>
         <div class="lg:flex flex-none h-[90vh] bg-slate-200">
             <div class="w-1/3 flex justify-center align-middle hidden lg:block m-auto">
                 <div class="w-3/4 text-center h-fit  mx-auto rounded border shadow-lg bg-blue-400" v-if="currentGameStore.challenger != null && currentGameStore.receiver != null  ">
+                   <div>
                     <div class="font-bold text-xl"
                     :class="[userStore.username == currentGameStore.challenger.username && playerColor == 'black' ? 
                           'bg-white' 
@@ -121,10 +127,26 @@ const getBoard = ()=>{
                     {{ playerPieces =='...' ? '': 
                         playerPieces == 'white' ? currentGameStore.receiver.username:currentGameStore.challenger.username
                     }}
-            
                     </div>
+                    <div class="flex">
+                      <p v-if="useCurrentGameStore().challenger.username == userStore.username " v-for="p in capturedPiece.black">
+                        <p class="box" :class="[getWhitePiece(p)]"></p>
+                      </p>
+                      <p v-else v-for="p in capturedPiece.white">
+                        <p class="box" :class="[getBlackPiece(p)]"></p>
+                      </p>
+                    </div>
+                   </div> 
                     <div class="mx-auto flex justify-center my-10">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m18.839 20.696l-3.06-3.054l-2.2 2.2l-.277-.276q-.46-.46-.46-1.137t.46-1.137l4.09-4.09q.46-.46 1.137-.46t1.137.46l.276.277l-2.2 2.2l3.054 3.06q.243.242.243.565t-.243.565l-.827.827q-.242.242-.565.242t-.565-.242M21 5.477L9.958 16.538l.74.735q.46.46.46 1.137t-.46 1.136l-.277.277l-2.2-2.2l-3.06 3.054q-.242.242-.565.242t-.565-.242l-.827-.827q-.242-.242-.242-.565t.242-.566l3.054-3.06l-2.2-2.2l.277-.276q.46-.46 1.136-.46q.677 0 1.137.46l.754.76L18.423 2.9H21zM8.35 9.425l.58-.594l.576-.6l-.575.6zm-.708.714L3 5.477V2.9h2.577L10.2 7.542l-.694.689L5.175 3.9H4v1.175l4.35 4.35zm1.608 5.686L20 5.075V3.9h-1.175L8.075 14.65zm0 0l-.58-.594l-.595-.581l.594.58z"/></svg>
+                    </div>
+                    <div class="flex">
+                      <p v-if="useCurrentGameStore().challenger.username != userStore.username " v-for="p in capturedPiece.black">
+                        <p class="box" :class="[getWhitePiece(p)]"></p>
+                      </p>
+                      <p v-else v-for="p in capturedPiece.white">
+                        <p class="box" :class="[getBlackPiece(p)]"></p>
+                      </p>
                     </div>
                     <div class="font-bold text-xl"
                         :class="[userStore.username == currentGameStore.challenger.username && playerColor == 'white' ? 
@@ -136,7 +158,7 @@ const getBoard = ()=>{
             </div>
             <div class="lg:w-2/3 p-10   my-auto mx-auto" >
                 <div v-if="currentGameStore.challenger != null && currentGameStore.receiver != null  " class="lg:hidden block" >
-                  <div class="font-bold text-xl"
+                  <div class="font-bold text-xl flex"
                     :class="[userStore.username == currentGameStore.challenger.username && playerColor == 'black' ? 
                           'bg-white' 
                           : userStore.username == currentGameStore.receiver.username && playerColor == 'white' ? 'bg-white' : ''
@@ -145,7 +167,15 @@ const getBoard = ()=>{
                     {{ playerPieces =='...' ? '': 
                         playerPieces == 'white' ? currentGameStore.receiver.username:currentGameStore.challenger.username
                     }}
-            
+                    <div class="flex align-baseline   items-baseline  pt-1">
+                      <p v-if="useCurrentGameStore().challenger.username == userStore.username " v-for="p in capturedPiece.black">
+                        <p class="box" :class="[getWhitePiece(p)]"></p>
+                      </p>
+                      <p v-else v-for="p in capturedPiece.white">
+                        <p class="box" :class="[getBlackPiece(p)]"></p>
+                      </p>
+                    </div>
+                    
                     </div>
                 </div>
                 <TheChessboard 
@@ -157,13 +187,21 @@ const getBoard = ()=>{
                 v-on:move="peiceMoved"
                 reactive-config  />
                 <div v-if="currentGameStore.challenger != null && currentGameStore.receiver != null" class="lg:hidden block" >
-                  <div class="font-bold text-xl"
+                  <div class="font-bold align-baseline items-baseline text-xl flex "
                         :class="[userStore.username == currentGameStore.challenger.username && playerColor == 'white' ? 
                           'bg-white' 
                           : userStore.username == currentGameStore.receiver.username && playerColor == 'black' ? 'bg-white' : ''
                             ]"
                     >
                     {{userStore.username}}
+                    <div class="flex align-baseline   items-baseline  pt-1">
+                      <p v-if="useCurrentGameStore().challenger.username != userStore.username " v-for="p in capturedPiece.black">
+                        <p class="box" :class="[getWhitePiece(p)]"></p>
+                      </p>
+                      <p v-else v-for="p in capturedPiece.white">
+                        <p class="box" :class="[getBlackPiece(p)]"></p>
+                      </p>
+                    </div>
                   </div>
                 </div>
                 <!-- <div class="flex justify-around my-5 font-bold">
