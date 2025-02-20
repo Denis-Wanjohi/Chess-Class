@@ -11,6 +11,7 @@ import NavBar from '@/components/NavBar.vue';
 import { ProgressSpinner } from 'primevue';
 const userStore = useUserStore()
 const isLoggingIn = ref(false)
+const isError = ref(false)
 const user = ref({
     'email':null,
     'password':null,
@@ -36,6 +37,11 @@ const userLogin = ()=>{
     })
     .catch(err=>{
         isLoggingIn.value = false
+        isError.value = true
+        user.value.password = ''
+        setTimeout(()=>{
+            isError.value = false
+        },5000)
         console.error(err)
     })
 }
@@ -56,17 +62,20 @@ const userLogin = ()=>{
                 <InputText required="true" type="email" id="value3" v-model="user.email"  />
                 <label for="value3">Email</label>
             </FloatLabel>
-            <FloatLabel variant="on" class="my-10">
+            <FloatLabel variant="on" class="my-5">
                 <InputText required="true" id="value3" type="password" v-model="user.password"  />
                 <label for="value3">Password</label>
             </FloatLabel>
+            <p v-if="isError" class="text-center text-xs text-red-700 py-2">Credentials don't match our records</p>
             
-            <Button v-if="!isLoggingIn"  type="submit" class="mx-auto" severity="success">L O G I N </Button>
-            <Button v-else type="button" class="mx-auto" severity="success">
-                L O G I N 
-                <ProgressSpinner style="width: 20px; height: 20px" strokeWidth="8" fill="transparent"
-            animationDuration=".5s" aria-label="Custom ProgressSpinner" />
-            </Button>
+            <div  class="flex justify-center">
+                <Button v-if="!isLoggingIn"  type="submit" class="mx-auto" severity="success">L O G I N </Button>
+                <Button v-else type="button" class="mx-auto" severity="success">
+                    L O G I N 
+                    <ProgressSpinner style="width: 20px; height: 20px" strokeWidth="8" fill="transparent"
+                animationDuration=".5s" aria-label="Custom ProgressSpinner" />
+                </Button>
+            </div>
         </form>
     </div>
 </template>
