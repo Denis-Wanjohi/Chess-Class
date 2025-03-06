@@ -37,12 +37,12 @@ const logout = ()=>{
         <div v-else class="flex justify-around items-center">
             <div class="hidden lg:block">
                 <ul class="flex space-x-4 text-md  mr-40">
-                    <li><router-link to="/play" class="px-5 py-2 hover:bg-slate-700 rounded  text-white">Play</router-link></li>
-                    <li><router-link to="/learn" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Learn</router-link></li>
+                    <!-- <li><router-link to="/play" class="px-5 py-2 hover:bg-slate-700 rounded  text-white">Play</router-link></li> -->
+                    <!-- <li><router-link to="/learn" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Learn</router-link></li> -->
                     <li><router-link to="/community" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Community</router-link></li>
                     <li><router-link to="/challanges" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Challenges</router-link></li>
                     <li><router-link to="/puzzles" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Puzzles</router-link></li>
-                    <li><router-link to="/chess" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Chess</router-link></li>
+                    <!-- <li><router-link to="/chess" class="px-5 py-2 rounded hover:bg-slate-700   text-white">Chess</router-link></li> -->
                 </ul>
             </div>
             <div v-if="!useUserStore().loggedIn">
@@ -78,12 +78,12 @@ const logout = ()=>{
                 <span class="font-bold">{{userStore.fullName}}</span>
             </div>
         </template>
-        <div class="my-4 ">
+        <!-- <div class="my-4 ">
             <router-link to="/play" class="font-bold hover:bg-slate-300 px-10 py-2 rounded  text-xl">Play</router-link>
         </div>
         <div class="my-4 ">
             <router-link to="/learn" class="font-bold hover:bg-slate-300 px-10 py-2 rounded  text-xl">Learn</router-link>
-        </div>
+        </div> -->
         <div class="my-4 ">
             <router-link to="/community" class="font-bold hover:bg-slate-300 px-10 py-2 rounded  text-xl">Community</router-link>
         </div>

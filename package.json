@@ -15,6 +15,7 @@
     "chessboardjs": "^0.0.1",
     "laravel-echo": "^1.18.0",
     "pinia": "^2.3.0",
+    "primeicons": "^7.0.0",
     "primevue": "^4.2.5",
     "pusher-js": "^8.4.0-rc2",
     "socket.io-client": "^4.8.1",

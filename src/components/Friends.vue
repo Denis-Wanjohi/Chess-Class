@@ -105,7 +105,6 @@ const CustomerService = {
 const challange = (value)=>{
     axiosClient.post('/challange',{'id':value}).
     then((res)=>{
-        console.log(res.data.message)
         if(res.data.message == 'onPlay'){
             gameCode.value = res.data.game.code
             show()

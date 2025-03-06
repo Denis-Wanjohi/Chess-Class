@@ -10,7 +10,7 @@ const axiosClient = axios.create({
 axiosClient.interceptors.request.use(config =>{
     config.headers.Authorization = `Bearer ${useUserStore().token || localStorage.getItem('token')}`
     config.headers['Content-Type'] = 'application/json'
-    // config.headers['ngrok-skip-browser-warning'] = '69420'
+    config.headers['ngrok-skip-browser-warning'] = '69420'
     return config;
 })
 

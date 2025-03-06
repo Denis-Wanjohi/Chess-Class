@@ -25,6 +25,9 @@ class PlayController extends Controller
         return response()->json($board);
     }
 
+    /**
+     * creatung a challenge
+     */
     public function challange(Request $request){
         // new ChallangeRequest()
         broadcast(new ChallangeRequest($request->id));
@@ -40,8 +43,10 @@ class PlayController extends Controller
         
     }
 
+    /**
+     * game play
+     */
     public  function play(Request $request){
-        logger()->info($request);
         // create the game or update if exist
         $game = Play::where('code',request('code'))->get();
         
@@ -82,11 +87,16 @@ class PlayController extends Controller
 
     }
 
+    /**
+     * current game
+     */
     public function currentGame(){
-        // logger()->info(request());
         $game = $this->getCurrentGame(request()['code']);  
-        
+                
         if($game->isEmpty()){
+            if(Play::where('code', request()['code'])->where('isDone',true)->get()->isNotEmpty()){
+                return response()->json('cannot use code'); 
+            }
             logger()->info('creating game with code '.request('code'));
             $data = Challange::where('code', request()['code'])->first();
             // logger()->info($data->challanger_id);
@@ -98,8 +108,6 @@ class PlayController extends Controller
                 'board' => request()['board'],
                 'isDone' => request()['status'],
             ]);
-            // logger()->info($game->board." <board  color> ".$game->color);
-            // logger()->info($game[0]);
             broadcast(new PlayGame($game->board,$game->color,$game));
             $game = $this->getCurrentGame(request()['code']);  
             // logger()->info($game);
@@ -117,6 +125,9 @@ class PlayController extends Controller
         return response()->json($data);
     }
 
+    /**
+     * cancel all games
+     */
     public function cancelGames(){
         $game = Play::where('challanger',Auth::id())
                 ->orWhere('receiver',Auth::id())
@@ -130,13 +141,18 @@ class PlayController extends Controller
 
     }
 
+    /**
+     * end current game
+     */
+    public function endGame(Request $request){
+        logger()->info($request[0]);
+        Play::where('code',$request[0])->update(['isDone' => true]);
+    }
 
 
     // P R I V A T E    F U N C T I O N S
     private function getCurrentGame($code)
     {
-        $data = Challange::where('code', $code)->first();
-        // logger()->info($data->challanger_id);
         return Play::where('code', $code)
             ->where('isDone',0)    
             ->get()

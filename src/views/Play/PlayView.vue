@@ -5,13 +5,19 @@ import NavBar from '@/components/NavBar.vue';
 import 'vue3-chessboard/style.css';
 import axiosClient from '@/axios/axios.js'
 import echo from '@/echo.js'
+import {Toast,Dialog} from 'primevue'
 import { useUserStore } from '@/stores/user';
 import { useChallengeStore } from '@/stores/challange';
 import { useCurrentGameStore } from '@/stores/currentGame';
 import { useRouter,useRoute } from 'vue-router';
+import { useToast } from 'primevue';
 import Button from 'primevue/button'
 import { getBlackPiece, getWhitePiece } from '@/Utils/utils';
+import router from '@/router';
 const userStore = useUserStore()
+const toast = useToast()
+const isWinner = ref(null)
+const route = useRoute()
 const challangeStore = useChallengeStore()
 const currentGameStore = useCurrentGameStore()
 const playerColor = ref('white');
@@ -19,6 +25,7 @@ const playerPieces = ref('...')
 const board = ref(null)
 const boardKey = ref(0)
 const code = ref(null)
+const isCheckmated = ref(false)
 const capturedPiece = ref({
   'black':[],
   'white':[],
@@ -104,18 +111,37 @@ const getBoard = ()=>{
     console.error(err)
   })
 }
+function handleCheckmate(isMated) {
+  isCheckmated.value = true
+  isWinner.value = isMated == 'white' ? 'Black' : 'White'
+  endGame()
+}
+function newGame(){
+  router.push('/community')
+}
+function rematch(){
+  if(currentGameStore.challenger.id == userStore.id){
+      challange(currentGameStore.receiver.id)
+  }else{
+    challange(currentGameStore.challenger.id)
+  }
+}
+function endGame(){
+  // console.log(route.params.id)
+  axiosClient.post('/end-game',route.params.id)
+
+}
+
+const challange = (value)=>{
+  axiosClient.post('/challange',{'id':value})
+}
 </script>
 
 <template>
     <NavBar/>
-    <!-- {{ capturedPiece }} -->
-    <!-- {{ useCurrentGameStore().challenger.username }} -->
-    <!-- {{ board.getFen() }} -->
-      <!-- <div class="box" :class="[getWhitePiece('p')]"></div> -->
-      <!-- <img src="" class="box" alt=""> -->
     <div>
-        <div class="lg:flex flex-none h-[90vh] bg-slate-200">
-            <div class="w-1/3 flex justify-center align-middle hidden lg:block m-auto">
+        <div class="lg:flex flex-none h-screen bg-slate-200">
+            <div class="w-1/3 flex justify-center align-middle  hidden lg:block m-auto">
                 <div class="w-3/4 text-center h-fit  mx-auto rounded border shadow-lg bg-blue-400" v-if="currentGameStore.challenger != null && currentGameStore.receiver != null  ">
                    <div>
                     <div class="font-bold text-xl"
@@ -179,11 +205,12 @@ const getBoard = ()=>{
                     </div>
                 </div>
                 <TheChessboard 
-                class="lg:w-[60%] w-full"
+                class="lg:w-[60%] md:w-[40%] sm:w-[70%] w-full"
                 :player-color="playerColor"
                 :key="boardKey"
                 :board-config="boardConfig" 
                 @board-created="(api)=> board = api"
+                @checkmate="handleCheckmate"
                 v-on:move="peiceMoved"
                 reactive-config  />
                 <div v-if="currentGameStore.challenger != null && currentGameStore.receiver != null" class="lg:hidden block" >
@@ -195,12 +222,12 @@ const getBoard = ()=>{
                     >
                     {{userStore.username}}
                     <div class="flex align-baseline   items-baseline  pt-1">
-                      <p v-if="useCurrentGameStore().challenger.username != userStore.username " v-for="p in capturedPiece.black">
+                      <div v-if="useCurrentGameStore().challenger.username != userStore.username " v-for="p in capturedPiece.black">
                         <p class="box" :class="[getWhitePiece(p)]"></p>
-                      </p>
-                      <p v-else v-for="p in capturedPiece.white">
+                      </div>
+                      <div v-else v-for="p in capturedPiece.white">
                         <p class="box" :class="[getBlackPiece(p)]"></p>
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -210,5 +237,15 @@ const getBoard = ()=>{
                 </div> -->
             </div>
         </div>
+        <Dialog v-model:visible="isCheckmated" modal header=" " :style="{ width: '25rem' }" class="bg-blue-400">
+          <div class="w-3/4 text-center mx-auto">
+            <p class="font-bold text-xl space-x-2 pt-5">GAME OVER</p>
+            <p  class="py-5">{{ isWinner }} won. </p>
+            <div class="grid grid-cols-2 gap-2 font-bold">
+              <Button @click="newGame" outlined class="text-nowrap"> <i class="pi pi-plus"></i> NEW GAME</Button>
+              <Button @click="rematch" outlined> <i class="pi pi-refresh"></i>  REMATCH</Button>
+            </div>
+          </div>
+        </Dialog>
     </div>
 </template>

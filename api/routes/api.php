@@ -32,6 +32,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/active-challanges',[ChallangeController::class,'activeChallanges']);
     Route::post('/cancel-challenge/{id}',[ChallangeController::class,'cancelChallenge']);
     Route::post('/cancel-allgames',[PlayController::class,'cancelGames']);
+
+    Route::post('/end-game',[PlayController::class,'endGame']);
+
 });
 
 
